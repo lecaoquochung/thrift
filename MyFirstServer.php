@@ -1,15 +1,21 @@
 #!/usr/bin/env php
 <?php
+
 error_reporting(E_ERROR);
 date_default_timezone_set('UTC');
+
 define('THRIFT_PHP_LIB', __DIR__.'/thrift-0.9.3/lib/php/lib');
 define('GEN_PHP_DIR', __DIR__.'/gen-php');
+
 require_once THRIFT_PHP_LIB.'/Thrift/ClassLoader/ThriftClassLoader.php';
+
 use Thrift\ClassLoader\ThriftClassLoader;
+
 $loader = new ThriftClassLoader();
 $loader->registerNamespace('Thrift', THRIFT_PHP_LIB);
 $loader->registerDefinition('myfirst', GEN_PHP_DIR);
 $loader->register();
+
 use Thrift\Protocol\TBinaryProtocol;
 use Thrift\Transport\TPhpStream;
 use Thrift\Transport\TBufferedTransport;
@@ -33,8 +39,7 @@ class MyFirstHandler implements \myfirst\MyFirstServiceIf {
    {
      $e = new \myfirst\MyError();
      $e->error_code = 1;
-     $e->error_description = "Can't get size information
-    for file " . $filename;
+     $e->error_description = "Can't get size information for file " . $filename;
      error_log($e->error_description);
      throw $e;
    }
